@@ -1,7 +1,7 @@
 @extends('website.layouts.main')
 @section('content')
 <div class="col-md-12">
-	<h4 class="fw-bold mb-3">CLOSING (TUTUUP BUKU)</h4>
+	<h4 class="fw-bold mb-3">CLOSING (TUTUP BUKU)</h4>
 
     @if(Session::has('success'))
     <div class="alert alert-success">

@@ -62,9 +62,9 @@
             <tr class="text-danger">
             @endif
                 <td>{{ $no }}</td>
-                <td>{{ $d->nama_kategori }}</td>
+                <td><a href="#" class="detail-button custom-link">{{ $d->nama_kategori }}</a></td>
                 <td>{{ $d->jenis_mutasi }}</td>
-                <td>{{ $d->tanggal_transaksi }}</td>
+                <td data-catatan="{{ $d->catatan }}">{{ $d->tanggal_transaksi }}</td>
                 <td class="text-end">{{ $d->jumlah }}</td>
             </tr>
 
@@ -88,10 +88,59 @@
     </table>
     <button class="btn btn-cetak btn-success"><i class="bx bx-printer"></i> Cetak Laporan</button>
 </div>
+
+ <!-- Modal untuk menampilkan detail tabel -->
+ <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel">Detail Tabel</h5>
+            </div>
+            <div class="modal-body">
+                <form id="detailForm">
+                    <!-- Tempatkan kolom formulir di sini sesuai dengan kebutuhan -->
+                    <label for="mdl_kategori">Kategori:</label>
+                    <input type="text" id="mdl_kategori" name="mdl_kategori" class="form-control" readonly>
+
+                    <label for="mdl_catatan">Catatan:</label>
+                    <input type="text" id="mdl_catatan" name="mdl_catatan" class="form-control" readonly>
+
+                    <label for="mdl_catatan">PIC:</label>
+                    <input type="text" id="mdl_pic" name="mdl_pic" class="form-control" readonly>
+
+
+                    <!-- Tambahkan kolom formulir lainnya sesuai dengan kebutuhan -->
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
 @endsection
 
 @push('styles')
+<style>
+  .modal-backdrop {
+          display: none !important;
+  }
+  .custom-link {
+      color: inherit !important; /* Inherit text color from the parent element */
+    }
+</style>
 @endpush
 
 @push('scripts')
+<script>
+  $('body').on('click', '.detail-button', function () {
+        // Ambil data dari baris tabel
+        var field1 = $(this).closest('tr').find('td:eq(1)').text().trim();
+        var field2 = $(this).closest('tr').find('td:eq(3)').data('catatan')
+
+        // Setel nilai kolom formulir di modal
+        $('#mdl_kategori').val(field1);
+        $('#mdl_catatan').val(field2);
+
+        // Tampilkan modal
+        $('#detailModal').modal('show');
+    });
+</script>
 @endpush

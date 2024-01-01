@@ -47,17 +47,22 @@
   <body class="text-center">
     
 <main class="form-signin">
-  <form>
+  <form method="post" action="{{ route('website.auth.login') }}">
+    @csrf
     <img class="mb-2" src="{{ asset('img/logo.png')}}" alt="" width="100" height="auto">
-    <h1 class="h3 mb-3 fw-normal">Buku Kas Masjid</h1>
-
+    <h3 class="h5 mb-3 fw-normal">Buku Kas Masjid</h3>
+      @error('unauthenticate')
+      <div class="alert alert-danger" role="alert">
+          {{ $message }}
+      </div>
+      @enderror
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+      <label for="email">Email address</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+      <label for="password">Password</label>
     </div>
 
     <div class="checkbox mb-3">

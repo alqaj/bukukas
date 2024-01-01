@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mutasi;
 use App\Models\Kategori;
+use App\Models\Closing;
 class MutasiController extends Controller
 {
     public function create()
@@ -28,6 +29,7 @@ class MutasiController extends Controller
             $bulan = $request->bulan;
             $tahun = $request->tahun;
             $data = Mutasi::join('kategori','mutasi.kategori','=','kategori.id')
+            ->select('mutasi.*', 'kategori.id', 'kategori.nama_kategori')
             ->whereYear('tanggal_transaksi',$tahun)
             ->whereMonth('tanggal_transaksi',$bulan)
             ->get();
@@ -38,8 +40,20 @@ class MutasiController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, ['jenis_mutasi' => 'required', 'kategori'=> 'required', 'jumlah'=> 'required', 'tanggal_transaksi'=> 'required']);
+        $this->validate($request, ['jenis_mutasi' => 'required', 'kategori'=> 'required', 'jumlah'=> 'required', 'tanggal_transaksi'=> 'required|date']);
 
+        $tanggalTransaksi = $request->input('tanggal_transaksi');
+        $tahun = date('Y', strtotime($tanggalTransaksi));
+        $bulan = date('n', strtotime($tanggalTransaksi));
+
+        $existsInTableClosing = Closing::where('tahun', $tahun)
+        ->where('bulan', $bulan)
+        ->exists();
+
+        if($existsInTableClosing)
+        {
+            return redirect()->back()->with('error','Maaf, sudah closing untuk bulan ' .$bulan . ' tahun ' . $tahun . '!');
+        }
         $mutasi = Mutasi::create($request->all());
         return redirect()->route('website.mutasi.index')->with('success','Sukses menambah data transaksi anda!');
     }

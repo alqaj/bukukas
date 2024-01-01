@@ -28,24 +28,25 @@ Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
     Route::get('register', 'RegisterController@showRegisterForm')->name('auth.register');
     Route::post('register', 'RegisterController@register')->name('auth.create');
 
-    Route::get('/mutasi/index', 'MutasiController@index')->name('mutasi.index');
-    Route::get('/mutasi/create', 'MutasiController@create')->name('mutasi.create');
-    Route::post('/mutasi/store', 'MutasiController@store')->name('mutasi.store');
-    Route::get('/mutasi/kategori/{jenis}', 'MutasiController@kategori')->name('mutasi.kategori');
-
-    Route::get('/kategori/create', 'KategoriController@create')->name('kategori.create');
-    Route::post('/kategori/store', 'KategoriController@store')->name('kategori.store');
-    Route::get('/kategori/index', 'KategoriController@index')->name('kategori.index');
-
-    Route::get('/closing/informasi', 'ClosingController@informasi')->name('closing.informasi');
-    Route::get('/closing/input', 'ClosingController@input')->name('closing.input');
-    Route::get('/closing/review', 'ClosingController@review')->name('closing.review');
-    Route::get('/closing/konfirmasi', 'ClosingController@konfirmasi')->name('closing.konfirmasi');
-    Route::post('/closing/execute', 'ClosingController@execute')->name('closing.execute');
 
     Route::middleware('auth.web')->group(function () {
         // Route::get('/', 'HomeController@index')->name('home');
         Route::get('/home', 'HomeController@index')->name('auth.home');
         Route::get('logout', 'AuthController@logout')->name('auth.logout');
+
+        Route::get('/mutasi/index', 'MutasiController@index')->name('mutasi.index');
+        Route::get('/mutasi/create', 'MutasiController@create')->name('mutasi.create');
+        Route::post('/mutasi/store', 'MutasiController@store')->name('mutasi.store');
+        Route::get('/mutasi/kategori/{jenis}', 'MutasiController@kategori')->name('mutasi.kategori');
+
+        Route::get('/kategori/create', 'KategoriController@create')->name('kategori.create');
+        Route::post('/kategori/store', 'KategoriController@store')->name('kategori.store');
+        Route::get('/kategori/index', 'KategoriController@index')->name('kategori.index');
+
+        Route::get('/closing/informasi', 'ClosingController@informasi')->name('closing.informasi');
+        Route::get('/closing/input', 'ClosingController@input')->name('closing.input');
+        Route::get('/closing/review', 'ClosingController@review')->name('closing.review');
+        Route::get('/closing/konfirmasi', 'ClosingController@konfirmasi')->name('closing.konfirmasi');
+        Route::post('/closing/execute', 'ClosingController@execute')->name('closing.execute');
     });
 });

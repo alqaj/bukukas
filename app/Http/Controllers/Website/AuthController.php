@@ -27,7 +27,7 @@ class AuthController extends Controller
         public function authenticate(LoginRequest $request)
         {
             $credentials = $request->only('email', 'password');
-
+            // dd($credentials);
             if (Auth::attempt($credentials)) {
                 return redirect()->route('website.home');
             }

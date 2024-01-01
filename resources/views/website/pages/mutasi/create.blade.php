@@ -2,6 +2,16 @@
 @section('content')
 <div class="col-md-12">
 	<h4 class="fw-bold mb-3">BUAT MUTASI</h4>
+    @if($errors->any())
+    <div class="alert alert-danger" role="alert">
+    {!! implode('', $errors->all('<div>:message</div>')) !!}
+    </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ Session::get('error')}}
+    </div>
+    @endif
     <form method="post" action="{{route('website.mutasi.store') }}">
         @csrf
         <fieldset>
