@@ -27,12 +27,13 @@ class MutasiController extends Controller
         {
             $bulan = $request->bulan;
             $tahun = $request->tahun;
-            $data = Mutasi::whereYear('tanggal_transaksi',$tahun)
-            ->whereMonth('tanggal_mutasi',$bulan)
+            $data = Mutasi::join('kategori','mutasi.kategori','=','kategori.id')
+            ->whereYear('tanggal_transaksi',$tahun)
+            ->whereMonth('tanggal_transaksi',$bulan)
             ->get();
-            return view('website.pages.mutasi.index', ['data'=> $data]);
+            return view('website.pages.mutasi.index', ['data'=> $data, 'bulan' => $bulan, 'tahun' => $tahun]);
         }
-        return view("website.pages.mutasi.index");
+        return view("website.pages.mutasi.index", ['bulan' => 0, 'tahun' => 0]);
     }
 
     public function store(Request $request)

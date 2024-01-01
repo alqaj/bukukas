@@ -37,6 +37,12 @@ Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
     Route::post('/kategori/store', 'KategoriController@store')->name('kategori.store');
     Route::get('/kategori/index', 'KategoriController@index')->name('kategori.index');
 
+    Route::get('/closing/informasi', 'ClosingController@informasi')->name('closing.informasi');
+    Route::get('/closing/input', 'ClosingController@input')->name('closing.input');
+    Route::get('/closing/review', 'ClosingController@review')->name('closing.review');
+    Route::get('/closing/konfirmasi', 'ClosingController@konfirmasi')->name('closing.konfirmasi');
+    Route::post('/closing/execute', 'ClosingController@execute')->name('closing.execute');
+
     Route::middleware('auth.web')->group(function () {
         // Route::get('/', 'HomeController@index')->name('home');
         Route::get('/home', 'HomeController@index')->name('auth.home');
