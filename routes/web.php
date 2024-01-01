@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/inspection/index', 'InspectionController@index')->name('inspection.index');
+    Route::get('/inspection/create', 'InspectionController@create')->name('inspection.create');
+    Route::get('/inspection/ajax_get_price_list', 'InspectionController@ajax_get_price_list')->name('inspection.ajax_get_price_list');
+
+    Route::get('/users/index', 'UserController@index')->name('users.index');
+    Route::get('/users/add', 'UserController@add')->name('users.add');
+    Route::get('/users/edit/{uuid}', 'UserController@edit')->name('users.edit');
+
+    Route::get('login', 'AuthController@showLoginPage')->name('auth.login');
+    Route::post('login', 'AuthController@authenticate')->name('auth.authenticate');
+    Route::get('register', 'RegisterController@showRegisterForm')->name('auth.register');
+    Route::post('register', 'RegisterController@register')->name('auth.create');
+
+    Route::get('/mutasi/index', 'MutasiController@index')->name('mutasi.index');
+    Route::get('/mutasi/create', 'MutasiController@create')->name('mutasi.create');
+    Route::post('/mutasi/store', 'MutasiController@store')->name('mutasi.store');
+    Route::get('/mutasi/kategori/{jenis}', 'MutasiController@kategori')->name('mutasi.kategori');
+
+    Route::get('/kategori/create', 'KategoriController@create')->name('kategori.create');
+    Route::post('/kategori/store', 'KategoriController@store')->name('kategori.store');
+    Route::get('/kategori/index', 'KategoriController@index')->name('kategori.index');
+
+    Route::middleware('auth.web')->group(function () {
+        // Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/home', 'HomeController@index')->name('auth.home');
+        Route::get('logout', 'AuthController@logout')->name('auth.logout');
+    });
+});
