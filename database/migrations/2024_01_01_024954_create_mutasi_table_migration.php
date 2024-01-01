@@ -21,6 +21,7 @@ class CreateMutasiTableMigration extends Migration
             $table->date('tanggal_transaksi');
             $table->string('catatan')->nullable();
             $table->bigInteger('closing_id')->nullable();
+            $table->bigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

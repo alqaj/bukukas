@@ -64,7 +64,7 @@
                 <td>{{ $no }}</td>
                 <td><a href="#" class="detail-button custom-link">{{ $d->nama_kategori }}</a></td>
                 <td>{{ $d->jenis_mutasi }}</td>
-                <td data-catatan="{{ $d->catatan }}">{{ $d->tanggal_transaksi }}</td>
+                <td data-catatan="{{ $d->catatan }}" data-pic="{{ $d->name }}">{{ $d->tanggal_transaksi }}</td>
                 <td class="text-end">{{ $d->jumlah }}</td>
             </tr>
 
@@ -100,13 +100,13 @@
                 <form id="detailForm">
                     <!-- Tempatkan kolom formulir di sini sesuai dengan kebutuhan -->
                     <label for="mdl_kategori">Kategori:</label>
-                    <input type="text" id="mdl_kategori" name="mdl_kategori" class="form-control" readonly>
+                    <input type="text" id="mdl_kategori" name="mdl_kategori" class="form-control" readonly disabled>
 
                     <label for="mdl_catatan">Catatan:</label>
-                    <input type="text" id="mdl_catatan" name="mdl_catatan" class="form-control" readonly>
+                    <input type="text" id="mdl_catatan" name="mdl_catatan" class="form-control" readonly disabled>
 
-                    <label for="mdl_catatan">PIC:</label>
-                    <input type="text" id="mdl_pic" name="mdl_pic" class="form-control" readonly>
+                    <label for="mdl_pic">PIC:</label>
+                    <input type="text" id="mdl_pic" name="mdl_pic" class="form-control" readonly disabled>
 
 
                     <!-- Tambahkan kolom formulir lainnya sesuai dengan kebutuhan -->
@@ -134,11 +134,12 @@
         // Ambil data dari baris tabel
         var field1 = $(this).closest('tr').find('td:eq(1)').text().trim();
         var field2 = $(this).closest('tr').find('td:eq(3)').data('catatan')
+        var field3 = $(this).closest('tr').find('td:eq(3)').data('pic')
 
         // Setel nilai kolom formulir di modal
         $('#mdl_kategori').val(field1);
         $('#mdl_catatan').val(field2);
-
+        $('#mdl_pic').val(field3);
         // Tampilkan modal
         $('#detailModal').modal('show');
     });

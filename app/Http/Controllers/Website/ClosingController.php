@@ -9,6 +9,7 @@ use App\Models\Mutasi;
 use App\Models\Closing;
 use App\Models\Kategori;
 use Carbon\Carbon;
+use Auth;
 class ClosingController extends Controller
 {
     public function informasi()
@@ -79,6 +80,7 @@ class ClosingController extends Controller
                 $closing = Closing::create([
                     'tahun' => $tahun,
                     'bulan' => $bulan,
+                    'pic' => Auth::user()->id,
                 ]);
         
                 // Step 2: Menyimpan data terkait
@@ -106,6 +108,7 @@ class ClosingController extends Controller
                     'jumlah' => $saldo,
                     'tanggal_transaksi' => Carbon::now()->startOfMonth(),
                     'catatan' => 'Sisa saldo bulan ' . $bulan . ' tahun ' . $tahun,
+                    'pic' => Auth::user()->id,
                 ]);
 
             });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Mutasi;
 use App\Models\Kategori;
@@ -29,7 +30,8 @@ class MutasiController extends Controller
             $bulan = $request->bulan;
             $tahun = $request->tahun;
             $data = Mutasi::join('kategori','mutasi.kategori','=','kategori.id')
-            ->select('mutasi.*', 'kategori.id', 'kategori.nama_kategori')
+            ->join('users', 'mutasi.user_id','=','users.id')
+            ->select('mutasi.*', 'kategori.id', 'kategori.nama_kategori', 'users.name')
             ->whereYear('tanggal_transaksi',$tahun)
             ->whereMonth('tanggal_transaksi',$bulan)
             ->get();
@@ -54,7 +56,9 @@ class MutasiController extends Controller
         {
             return redirect()->back()->with('error','Maaf, sudah closing untuk bulan ' .$bulan . ' tahun ' . $tahun . '!');
         }
-        $mutasi = Mutasi::create($request->all());
+        $dataMutasi = $request->all();
+        $dataMutasi['user_id']= Auth::user()->id;
+        $mutasi = Mutasi::create($dataMutasi);
         return redirect()->route('website.mutasi.index')->with('success','Sukses menambah data transaksi anda!');
     }
 }
