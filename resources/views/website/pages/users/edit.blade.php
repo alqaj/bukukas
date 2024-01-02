@@ -2,19 +2,24 @@
 @section('content')
 <div class="col-md-12">
 	<h4 class="fw-bold mb-3">EDIT - APPLICATION USERS</h4>
-    <form class="p-5 bg-light">
+    @if($errors->any())
+    <div class="alert alert-danger" role="alert">
+    {!! implode('', $errors->all('<div>:message</div>')) !!}
+    </div>
+    @endif
+    <form class="p-5 bg-light" action="{{ route('website.users.update') }}" method="PUT">
         <fieldset>
             <div class="mb-3">
-                <label for="uid" class="form-label">User ID</label>
-                <input type="text" id="uid" class="form-control" placeholder="Disabled input">
+                <label for="uuid" class="form-label">UUID</label>
+                <input type="text" id="uuid" class="form-control" value="{{ $user->uuid }}" readOnly disabled>
             </div>
             <div class="mb-3">
-                <label for="nik" class="form-label">NK</label>
-                <input type="text" id="nik" class="form-control" placeholder="Disabled input">
+                <label for="nama" class="form-label">NAMA</label>
+                <input type="text" id="nama" name="nama" class="form-control" value="{{ $user->name }}">
             </div>
             <div class="mb-5">
-                <label for="nama" class="form-label">Nama Karyawan</label>
-                <input type="text" id="nama" class="form-control" placeholder="Disabled input">
+                <label for="email" class="form-label">EMAIL</label>
+                <input type="text" id="email" class="form-control" value="{{ $user->email }}">
             </div>
             <div class="mb-3">
                 <div class="form-check">

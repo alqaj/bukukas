@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Mutasi;
 use App\Models\Kategori;
 use App\Models\Closing;
@@ -60,5 +61,18 @@ class MutasiController extends Controller
         $dataMutasi['user_id']= Auth::user()->id;
         $mutasi = Mutasi::create($dataMutasi);
         return redirect()->route('website.mutasi.index')->with('success','Sukses menambah data transaksi anda!');
+    }
+
+    public function laporan(Request $request)
+    {
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+        $data = Mutasi::join('kategori','mutasi.kategori','=','kategori.id')
+            ->select('mutasi.*', 'kategori.nama_kategori')
+            ->whereYear('tanggal_transaksi',$tahun)
+            ->whereMonth('tanggal_transaksi',$bulan)
+            ->get();
+        $pdf = Pdf::loadView( 'website.pages.mutasi.laporan', compact(['bulan','tahun', 'data']))->setPaper('a4');
+        return $pdf->stream();
     }
 }

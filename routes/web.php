@@ -15,13 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/inspection/index', 'InspectionController@index')->name('inspection.index');
-    Route::get('/inspection/create', 'InspectionController@create')->name('inspection.create');
-    Route::get('/inspection/ajax_get_price_list', 'InspectionController@ajax_get_price_list')->name('inspection.ajax_get_price_list');
 
     Route::get('/users/index', 'UserController@index')->name('users.index');
     Route::get('/users/add', 'UserController@add')->name('users.add');
     Route::get('/users/edit/{uuid}', 'UserController@edit')->name('users.edit');
+    Route::put('/users/update', 'UserController@update')->name('users.update');
 
     Route::get('login', 'AuthController@showLoginPage')->name('auth.login');
     Route::post('login', 'AuthController@authenticate')->name('auth.authenticate');
@@ -38,6 +36,7 @@ Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
         Route::get('/mutasi/create', 'MutasiController@create')->name('mutasi.create');
         Route::post('/mutasi/store', 'MutasiController@store')->name('mutasi.store');
         Route::get('/mutasi/kategori/{jenis}', 'MutasiController@kategori')->name('mutasi.kategori');
+        Route::get('/mutasi/laporan', 'MutasiController@laporan')->name('mutasi.laporan');
 
         Route::get('/kategori/create', 'KategoriController@create')->name('kategori.create');
         Route::post('/kategori/store', 'KategoriController@store')->name('kategori.store');

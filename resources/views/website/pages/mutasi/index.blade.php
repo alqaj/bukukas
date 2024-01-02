@@ -65,7 +65,7 @@
                 <td><a href="#" class="detail-button custom-link">{{ $d->nama_kategori }}</a></td>
                 <td>{{ $d->jenis_mutasi }}</td>
                 <td data-catatan="{{ $d->catatan }}" data-pic="{{ $d->name }}">{{ $d->tanggal_transaksi }}</td>
-                <td class="text-end">{{ $d->jumlah }}</td>
+                <td class="text-end">{{  number_format($d->jumlah,0,".",",") }}</td>
             </tr>
 
             @php
@@ -82,11 +82,17 @@
         <tfoot class="bg-light">
           <tr>
             <th colspan="4">SISA SALDO BULAN TER-FILTER</th>
-            <th class="text-end">{{ $total }}</th>
+            <th class="text-end">{{ number_format($total,0,".",",") }}</th>
           </tr>
         </tfoot>
     </table>
-    <button class="btn btn-cetak btn-success"><i class="bx bx-printer"></i> Cetak Laporan</button>
+    @if($tahun > 0 && $bulan > 0)
+    <form action="{{ route('website.mutasi.laporan') }}">
+      <input type="hidden" name="bulan" value="{{ $bulan }}" />
+      <input type="hidden" name="tahun" value="{{ $tahun }}" />
+      <button class="btn btn-cetak btn-success"><i class="bx bx-printer"></i> Cetak Laporan</button>
+    </form>
+    @endif
 </div>
 
  <!-- Modal untuk menampilkan detail tabel -->

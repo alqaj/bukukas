@@ -6,26 +6,25 @@
         <thead class="bg-light">
             <tr class="text-center">
                 <th class="py-3">No.</th>
-                <th class="py-3">UID</th>
-                <th class="py-3">NIK</th>
                 <th class="py-3">Nama</th>
+                <th class="py-3">Email</th>
                 <th class="py-3">Edit</th>
             </tr>
         </thead>
         <tbody>
-            @for($i=1;$i<9;$i++)
+            @php $no = 1; @endphp
+            @foreach($data as $d)
             <tr>
-                <td>1</td>
-                <td>000074Agus</td>
-                <td>000074</td>
-                <td>Agus Ali</td>
+                <td>{{ $no }}</td>
+                <td>{{ $d->name }}</td>
+                <td>{{ $d->email}}</td>
                 <td>
-                    <button class="btn btn-primary">
-                        <i class="bx bx-edit-alt"></i>
-                    </button>
+                    <a class="btn btn-primary" href="{{ url('/users/edit') }}/{{ $d->uuid }}">
+                        <i class="bx bx-edit"></i>
+                    </a>
                 </td>
             </tr>
-            @endfor
+            @endforeach
         </tbody>
     </table>
 </div>
