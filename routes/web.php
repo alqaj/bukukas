@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
     Route::get('/', 'HomeController@index')->name('home');
 
-    Route::get('/users/index', 'UserController@index')->name('users.index');
-    Route::get('/users/add', 'UserController@add')->name('users.add');
-    Route::get('/users/edit/{uuid}', 'UserController@edit')->name('users.edit');
-    Route::put('/users/update', 'UserController@update')->name('users.update');
-
     Route::get('login', 'AuthController@showLoginPage')->name('auth.login');
     Route::post('login', 'AuthController@authenticate')->name('auth.authenticate');
     Route::get('register', 'RegisterController@showRegisterForm')->name('auth.register');
@@ -47,5 +42,10 @@ Route::group(['namespace' => 'Website', 'as' => 'website.'], function() {
         Route::get('/closing/review', 'ClosingController@review')->name('closing.review');
         Route::get('/closing/konfirmasi', 'ClosingController@konfirmasi')->name('closing.konfirmasi');
         Route::post('/closing/execute', 'ClosingController@execute')->name('closing.execute');
+
+        Route::get('/users/index', 'UserController@index')->name('users.index');
+        Route::get('/users/add', 'UserController@add')->name('users.add');
+        Route::get('/users/edit/{uuid}', 'UserController@edit')->name('users.edit');
+        Route::post('/users/update', 'UserController@update')->name('users.update');
     });
 });
